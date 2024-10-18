@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PostsController;
+use App\database\migrations;
 
 /*
 |--------------------------------------------------------------------------
@@ -17,3 +18,5 @@ use App\Http\Controllers\PostsController;
 
 Route::get('/index', [PostsController::class, 'index']);
 Route::get('/show', [PostsController::class, 'show']);
+Route::get('/posts', [migrations::class, 'posts']);
+Route::get('/authors', [migrations::class, 'authors']);
