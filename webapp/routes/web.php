@@ -14,9 +14,17 @@ use App\database\migrations;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
+Route::get('/', function () {
+    return view('welcome');
+});
 
+Route::get('/index', [PostsController::class, 'index'])->name('index');
+Route::get('/create', [PostsController::class, 'showCreate'])->name('show.create');
+Route::post('/create', [PostsController::class, 'storePost'])->name('store.post');
+Route::get('/edit/{id}', [PostsController::class, 'showEdit'])->name('show.edit');
+Route::post('/edit/{id}', [PostsController::class, 'registEdit'])->name('regist.edit');
+Route::delete('/delete/{id}', [PostsController::class, 'deletePost'])->name('delete');
 
-Route::get('/index', [PostsController::class, 'index']);
-Route::get('/show', [PostsController::class, 'show']);
-Route::get('/posts', [migrations::class, 'posts']);
-Route::get('/authors', [migrations::class, 'authors']);
+#Route::get('/show', [PostsController::class, 'show']);
+#Route::get('/posts', [migrations::class, 'posts']);
+#Route::get('/authors', [migrations::class, 'authors']);
