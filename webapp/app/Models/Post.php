@@ -9,7 +9,7 @@ class Post extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['id', 'title', 'author_id', 'content'];
+    protected $fillable = ['title', 'author_id', 'content'];
 
     public function getPosts(){
         $posts = self::join('authors', 'posts.author_id', '=', 'authors.id')
