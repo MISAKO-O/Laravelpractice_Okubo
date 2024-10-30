@@ -2,6 +2,17 @@
 <form action="{{ route('store.post') }}" method="post">
     @csrf
     <div>
+        @if ($errors->any())
+           <div class="alert alert-danger">入力内容に不備があります。エラー内容をご確認ください。</div> 
+                <ul>
+                    @foreach ($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
+        @endif
+    </div>
+
+    <div>
         タイトル
         <input type="text" name="title">
     </div>

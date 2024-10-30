@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 
 use App\Models\Post;
 use App\Models\Author;
+use App\Models\User;
+use App\Http\Requests\PostRequest;
 
 use DB;
 use Log;
@@ -32,7 +34,11 @@ class PostsController extends Controller
     public function storePost(Request $request)
     {
         $model = new Post();
-
+        $validated = $request->validate([
+            'title'  => 'required | max:255',
+            'author_id'  => 'required | integer',
+            'name'  => 'nullable | max:1000',
+        ]);
         try{
             DB::beginTransaction();
             $model->storePost($request);
@@ -45,7 +51,7 @@ class PostsController extends Controller
 
         return redirect()->route('index');
     }
-
+    
     public function showEdit($id)
     {
         $post = Post::find($id);
@@ -70,6 +76,22 @@ class PostsController extends Controller
             return redirect()->route('index');
         }
         return redirect()->route('index');
+    }
+
+    public function update(Request $request, $id)
+    {
+        $model = new Post();
+        $validated = $request->validate([
+            'title'=>'required | max:255',
+            'author_id'=>'required | integer',
+            'name'=>'nullable | max:1000',
+        ]);
+
+        $posts = Post::find($id);
+        $posts->name = $request->name;
+        $posts->author_id = $request->author_id;
+        $posts->title = $request->title;
+        $posts->save();
     }
 
     public function deletePost($id)
