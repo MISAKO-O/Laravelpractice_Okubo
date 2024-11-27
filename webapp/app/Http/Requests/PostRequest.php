@@ -24,7 +24,7 @@ class PostRequest extends FormRequest
         return [
             'title'  => 'required | max:255',
             'author_id'  => 'required | integer',
-            'name'  => 'nullable | max:1000',
+            'content'  => 'nullable | max:1000',
         ];
     }
 }

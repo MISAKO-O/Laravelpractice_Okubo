@@ -15,15 +15,15 @@ class Post extends Model
         $posts = self::join('authors', 'posts.author_id', '=', 'authors.id')
             ->select('posts.*', 'authors.author_name')
             ->get();
-
         return $posts;
     }
-
-    public function storePost($request){
+    
+    public function storePost($request)
+    {
         self::create([
-            'title' => $request->input('title'),
-            'author_id' => $request->input('author_id'),
-            'content' => $request->input('content')
+            'title' => $request['title'],
+            'author_id' => $request['author_id'],
+            'content' => $request['content']
         ]);
     }
 

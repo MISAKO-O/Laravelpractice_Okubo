@@ -22,7 +22,7 @@ class PostsController extends Controller
             'posts' => $posts
         ]);
     }
-
+    //入力画面の空欄の時最初の画面
     public function showCreate()
     {
         $authors = Author::all();
@@ -30,18 +30,14 @@ class PostsController extends Controller
             'authors' => $authors
         ]);
     }
-
-    public function storePost(Request $request)
+    //ユーザーが入力してDBにデータを送ってくれるところ
+    public function storePost(PostRequest $request)
     {
         $model = new Post();
-        $validated = $request->validate([
-            'title'  => 'required | max:255',
-            'author_id'  => 'required | integer',
-            'name'  => 'nullable | max:1000',
-        ]);
+        $validatedData = $request->validated();
         try{
             DB::beginTransaction();
-            $model->storePost($request);
+            $model->storePost($validatedData);
             DB::commit();
         } catch(\Exception $e){
             Log::error($e);
@@ -51,7 +47,7 @@ class PostsController extends Controller
 
         return redirect()->route('index');
     }
-    
+    //編集画面を表示してくれるところ
     public function showEdit($id)
     {
         $post = Post::find($id);
@@ -62,13 +58,14 @@ class PostsController extends Controller
             'authors' => $authors
         ]);
     }
-
-    public function registEdit(Request $request, $id)
+    //編集画面で入力されたデータをDBに送ってくれるところ
+    public function registEdit(PostRequest $request, $id)
     {
         $model = new Post();
+        $varidatedData = $request->validated();
         try{
             DB::beginTransaction();
-            $model->updatePost($request, $id);
+            $model->updatePost($varidatedData, $id);
             DB::commit();
         } catch(\Exception $e){
             Log::error($e);
@@ -77,14 +74,14 @@ class PostsController extends Controller
         }
         return redirect()->route('index');
     }
-
+    //
     public function update(Request $request, $id)
     {
         $model = new Post();
         $validated = $request->validate([
             'title'=>'required | max:255',
             'author_id'=>'required | integer',
-            'name'=>'nullable | max:1000',
+            'content'=>'nullable | max:1000',
         ]);
 
         $posts = Post::find($id);
@@ -93,7 +90,7 @@ class PostsController extends Controller
         $posts->title = $request->title;
         $posts->save();
     }
-
+    //削除画面DBに削除指示出すところ
     public function deletePost($id)
     {
         $model = new Post();

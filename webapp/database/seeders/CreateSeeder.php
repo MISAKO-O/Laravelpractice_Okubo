@@ -14,7 +14,7 @@ class CreateSeeder extends Seeder
     public function run(): void
     {
         Author::create([
-            'author_name' => '山田太郎',
+            'author_name' => "山田太郎",
         ]);
 
         Author::create([
