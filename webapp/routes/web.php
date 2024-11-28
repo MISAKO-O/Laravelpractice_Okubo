@@ -41,11 +41,16 @@ Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+    
+    
     Route::get('/index', [PostsController::class, 'index'])->name('index');
+
     Route::get('/create', [PostsController::class, 'showCreate'])->name('show.create');
     Route::post('/create', [PostsController::class, 'storePost'])->name('store.post');
+
     Route::get('/edit/{id}', [PostsController::class, 'showEdit'])->name('show.edit');
     Route::post('/edit/{id}', [PostsController::class, 'registEdit'])->name('regist.edit');
+    
     Route::delete('/delete/{id}', [PostsController::class, 'deletePost'])->name('delete');
 });
 
