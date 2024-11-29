@@ -25,7 +25,6 @@ class RemotePostController extends Controller
           DB::beginTransaction();
           $model->storePost($validatedData);
           DB::commit();
-          $deta = $request->json()->all();
           return response()->json(['message' => 'success post', 'data' => $validatedData]);
         } catch (\Exception $e) {
           Log::error($e);
